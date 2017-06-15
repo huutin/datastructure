@@ -60,6 +60,15 @@ SingleLinkedList.prototype.insertAfterIndex = function(data, index) {
     return _index;
 }
 
+SingleLinkedList.prototype.reverse = function() {
+    var current = this.head;
+    var prev = this.head;
+    while (current) {
+        // TO BE CONTINUOU
+        current = current.next;
+    }
+}
+
 SingleLinkedList.prototype.printAll = function() {
     var current = this.head;
     while (current) {

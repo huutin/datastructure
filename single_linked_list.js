@@ -61,12 +61,36 @@ SingleLinkedList.prototype.insertAfterIndex = function(data, index) {
 }
 
 SingleLinkedList.prototype.reverse = function() {
-    var current = this.head;
-    var prev = this.head;
-    while (current) {
-        // TO BE CONTINUOU
-        current = current.next;
+    function recursionReverse(current, prev, list) {
+        if (!current.next) {
+            list.head = current;
+            current.next = prev;
+            return;
+        }
+        let next = current.next;
+        current.next = prev;
+        current.prev = null;
+        recursionReverse(next, current, list);
     }
+    let current = this.head;
+    this.tail = this.head;
+    recursionReverse(current, null, this);
+}
+
+SingleLinkedList.prototype.reverse1 = function() {
+    function recursionReverse1(head, list) {
+        let first = head;
+        let rest = first.next;
+        if (!rest) {
+            list.head = first;
+            return;
+        }
+        recursionReverse1(rest, list);
+        first.next.next = first;
+        first.next = null;
+    }
+    let head = this.head;
+    recursionReverse1(head, this);
 }
 
 SingleLinkedList.prototype.printAll = function() {
@@ -94,9 +118,7 @@ mList.add(1);
 mList.add(2);
 mList.add(3);
 mList.add(4);
-mList.insertAfterIndex(5, 3);
-mList.insertAfterIndex(6, 4);
-
-mList.traverse(function(item) {
-    console.log(item.data);
-});
+mList.reverse1();
+mList.reverse();
+mList.reverse1();
+mList.printAll();

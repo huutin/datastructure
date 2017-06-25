@@ -93,6 +93,47 @@ SingleLinkedList.prototype.reverse1 = function() {
     recursionReverse1(head, this);
 }
 
+SingleLinkedList.prototype.segregateEvenAndOdd = function() {
+    // function segregateEvenAndOddRecur(prev_target, target, current, prev) {
+    //     if (!current.next) {
+    //         return;
+    //     }
+
+    // }
+    var target = null;
+    var prev_target = null;
+    var current = this.head;
+    var prev = this.head;
+    while (current) {
+        if (current.data % 2 == 0) {
+            prev.next = current.next;
+            if (prev_target == null) {
+                prev_target = current;
+                current.next = target;
+                this.head = current;
+                prev = current;
+                current = current.next;
+            } else {
+                prev.next = current.next;
+                prev_target.next = current;
+                current.next = target;
+                prev_target = current;
+                current = prev.next;
+            }
+        } else {
+            if (!target) {
+                target = current;
+            }
+            if (!prev_target) {
+                prev_target = prev;
+            }
+            prev = current;
+            current = current.next;
+        }
+
+    }
+}
+
 SingleLinkedList.prototype.printAll = function() {
     var current = this.head;
     while (current) {
@@ -114,11 +155,12 @@ SingleLinkedList.prototype.traverse = function(fn) {
 }
 
 let mList = new SingleLinkedList();
-mList.add(1);
-mList.add(2);
-mList.add(3);
+mList.add(8);
+mList.add(12);
+mList.add(10);
+mList.add(5);
 mList.add(4);
-mList.reverse1();
-mList.reverse();
-mList.reverse1();
+mList.add(1);
+mList.add(6);
+mList.segregateEvenAndOdd();
 mList.printAll();

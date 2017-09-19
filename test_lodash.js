@@ -1,5 +1,4 @@
 var _ = require('lodash');
-
 const normalize = (str) => str.replace(/\-/g, '');
 const validLength = (param, str) => str.length === param;
 const checkLengthSsn =  _.partial(validLength, 9);

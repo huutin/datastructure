@@ -1,23 +1,42 @@
-var _ = require('lodash');
+const _ = require('lodash');
+const Maybe = require("lodash-fantasy/data/Maybe");
 const normalize = (str) => str.replace(/\-/g, '');
 const validLength = (param, str) => str.length === param;
-const checkLengthSsn =  _.partial(validLength, 9);
+const checkLengthSsn = _.partial(validLength, 9);
 const cleanInput = (str) => {
   return _.curry(normalize)(_.trim(str))
 }
 const isValidSsn = (str) => {
   return checkLengthSsn(cleanInput(str))
 }
-// console.log(cleanInput(' 444-44-4444 '))
-// console.log(isValidSsn(' 444-44-4444 '))
-const plus = (p1, p2) => {
-  return p1 + p2
+const db = [{
+    name: 'Name1',
+    id: 1,
+    address: 'Address1'
+  },
+  {
+    name: 'Name2',
+    id: 2,
+    address: 'Address2'
+  },
+  {
+    name: 'Name3',
+    id: 3,
+    address: 'Address3'
+  },
+  {
+    name: 'Name4',
+    id: 4,
+    address: 'Address4'
+  }
+]
+const find = (db, id) => {
+  return db.filter((item) => {
+    return item.id === id
+  })[0]
 }
-const plus_plus = (x, p3) => {
-  return plus(x) + p3
-}
-
-
-
-const plus2 = _.curry(plus)(1)(1)
-console.log(plus2(1))
+const getPropObj = (b, a) => a[b]
+const getProp = (b) => _.partial(getPropObj, b)
+const safeFindObject = _.curry((_db, id) => Maybe.ofNullable(find(_db, id)));
+const safeFindStudent = safeFindObject(db);
+console.log(safeFindStudent(1).map(getProp('address')).orElse('Not Found'))

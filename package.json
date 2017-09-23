@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/huutin/datastructure#readme",
   "dependencies": {
+    "immutable": "^3.8.1",
     "lodash": "^4.17.4",
-    "lodash-fantasy": "^1.0.1",
-    "monet": "^0.8.10"
+    "lodash-fantasy": "^1.0.1"
   }
 }

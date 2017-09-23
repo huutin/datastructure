@@ -9,27 +9,13 @@ const cleanInput = (str) => {
 const isValidSsn = (str) => {
   return checkLengthSsn(cleanInput(str))
 }
-const db = [{
-    name: 'Name1',
-    id: 1,
-    address: 'Address1'
-  },
-  {
-    name: 'Name2',
-    id: 2,
-    address: 'Address2'
-  },
-  {
-    name: 'Name3',
-    id: 3,
-    address: 'Address3'
-  },
-  {
-    name: 'Name4',
-    id: 4,
-    address: 'Address4'
-  }
-]
+const db = Array.from(Array(1000).keys()).reduce((result, value) => {
+  result.push({
+    id: value,
+    name: "Name" + value
+  })
+  return result;
+}, [])
 const find = (db, id) => {
   return db.filter((item) => {
     return item.id === id
@@ -39,4 +25,6 @@ const getPropObj = (b, a) => a[b]
 const getProp = (b) => _.partial(getPropObj, b)
 const safeFindObject = _.curry((_db, id) => Maybe.ofNullable(find(_db, id)));
 const safeFindStudent = safeFindObject(db);
-console.log(safeFindStudent(1).map(getProp('address')).orElse('Not Found'))
+console.time('someFunction');
+console.log(safeFindStudent(88).map(getProp('name')).orElse('Not Found'))
+console.timeEnd('someFunction');

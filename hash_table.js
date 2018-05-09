@@ -23,7 +23,7 @@ const HashTable = function(size = 100) {
       while (table[hashedIndex] && table[hashedIndex].id !== id) {
         hashedIndex = (hashedIndex + 1) % size;
       }
-      return table[hashedIndex].id === id ? table[hashedIndex] : null
+      return table[hashedIndex] && table[hashedIndex].id === id ? table[hashedIndex] : null
     },
     printAll = function() {
       console.log(table)
